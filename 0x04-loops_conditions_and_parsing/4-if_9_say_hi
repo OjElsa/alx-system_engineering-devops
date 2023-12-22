@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # A script that prints the word 'Best School' but on the 9th ieration, prints 'Hi' afterwards
 
-count="0"
+c="0"
 
-while [ "$count" -lt 11 ];
+while [ "$c" -lt 10 ];
 do
 	echo "Best School"
-	if [ "$count" -eq 9 ]
+	((c++))
+	if [ "$c" -eq 9 ]
 	then
         	echo "Hi"
 	fi
-	count=$(( count += 1 ))
 done
