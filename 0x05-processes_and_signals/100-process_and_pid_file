@@ -11,13 +11,14 @@ terminator() {
 	exit
 }
 
+trap 'echo "Y U no love me?!"' SIGINT
+trap 'echo "I hate the kill command" && terminator' SIGTERM
+trap 'terminator' SIGQUIT
+
 echo "$$" > /var/run/holbertonscript.pid
 
 while true
 do
 	echo "To infinity and beyond"
-	trap 'echo "Y U no love me?!"' SIGINT
-	trap 'echo "I hate the kill command" && terminator' SIGTERM
-	trap 'terminator' SIGQUIT
 	sleep 2
 done
