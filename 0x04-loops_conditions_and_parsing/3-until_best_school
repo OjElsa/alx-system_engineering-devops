@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # This script is displaying "Best School" 10 times using until loop
 
-c="0"
+c=0
 
-until [ "$c" -eq 10 ];
+until [ $c -eq 10 ];
 do
-	echo "Best school"
-	((c++))
+	echo "Best School"
+	(( c++ ))
 done
