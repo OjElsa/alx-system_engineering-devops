@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# A script that Display listening sockets with PID and program name
+
+lsof -i -nP | grep LISTEN
