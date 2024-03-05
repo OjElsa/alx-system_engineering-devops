@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Install nginx
+apt-get update
+apt-get -y install nginx
+
+# Configure nginx to serve custom html content
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+
+# Configure nginx to redirect /redirect_me to another page
+sed -i "/listen 80 default_server;/a rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
+
+# Configure nginx to have a custom 404 page
+echo "Ceci n'est pas une page" > /usr/share/nginx/html/404.html
+sed -i "/listen 80 default_server;/a error_page 404 /404.html;\nlocation = /404.html {\n\troot /usr/share/nginx/html;\n\tinternal;\n}" /etc/nginx/sites-available/default
+
+# Set custom HTTP response header
+header_x_served_by="http{\\n\\tadd_header X-Served-By '$HOSTNAME';"
+sed -i "s/http {/$header_x_served_by/" /etc/nginx/nginx.conf
+
+# Restart nginx
+service nginx restart
