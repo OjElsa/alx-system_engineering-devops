@@ -26,10 +26,12 @@ server {
 }
 EOF
 
+# Create nginx user and group if not exists
+getent passwd nginx >/dev/null || useradd -r nginx
+getent group nginx >/dev/null || groupadd nginx
+
 # Give permissions to nginx user and group
-chown -R nginx:nginx /var/www/html
-chown -R nginx:nginx /var/log/nginx
-chown -R nginx:nginx /var/lib/nginx
+chown -R nginx:nginx /var/log/nginx /var/lib/nginx /var/www/html
 
 # Restart nginx service
 service nginx restart
