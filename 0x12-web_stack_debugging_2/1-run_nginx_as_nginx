@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# Configures an nginx server to listen on 8080 using the nginx user
+
+# Install nginx
+apt-get update
+apt-get install -y nginx
+
+# Backup config file
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+
+# Set nginx user as nginx
+sed -i 's/user\s\+[^;]\+/user nginx;/g' /etc/nginx/nginx.conf
+
+# Add server block config
+cat <<EOF > /etc/nginx/sites-available/default
+server {
+    listen 8080 default_server;
+    listen [::]:8080 default_server;
+
+    server_name _;
+
+    location / {
+        root /var/www/html;
+        index index.html;
+    }
+}
+EOF
+
+# Give permissions to nginx user and group
+chown -R nginx:nginx /var/www/html
+chown -R nginx:nginx /var/log/nginx
+chown -R nginx:nginx /var/lib/nginx
+
+# Restart nginx service
+service nginx restart
