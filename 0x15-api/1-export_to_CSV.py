@@ -20,10 +20,10 @@ def get_employee_todo_progress(employee_id):
         user_data = user_response.json()
         todo_data = todo_response.json()
 
-        employee_id = user_data.get('id')
+        user_id = user_data.get('id')
         employee_name = user_data.get('username')
 
-        csv_file = f"{employee_id}.csv"
+        csv_file = f"{user_id}.csv"
 
         with open(csv_file, mode='w', newline='', encoding='utf-8') as file:
             writer = csv.writer(file, quoting=csv.QUOTE_ALL)
@@ -32,7 +32,7 @@ def get_employee_todo_progress(employee_id):
 
             task_count = 0
             for task in todo_data:
-                writer.writerow([employee_id, employee_name,
+                writer.writerow([user_id, employee_name,
                                 task.get('completed'), task.get('title')])
                 task_count += 1
 
